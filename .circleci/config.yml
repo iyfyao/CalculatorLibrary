@@ -1,0 +1,24 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/python3.8
+    working_directory: ~/project
+    steps:
+    # step 1 : obtaining repo from github
+      - checkout
+    # steps 2 : creating virtual env and installing dependancies
+      - run:
+          name: install dependancies
+          command: | 
+            python3 -m virtualenv venv 
+            . venv/bin/activate
+            pip install -r requirements.txt
+    # steps 3 : Linters and Pytest 
+      - run:
+          name: run tests
+          command: | 
+            . venv/bin/activate
+            flake8 --exclude=venv* --statistics
+            pytest -s --cov = calculator
+            
