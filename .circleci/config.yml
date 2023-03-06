@@ -2,11 +2,14 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/python3.8
+      - image: cimg/python:3.8
     working_directory: ~/project
     steps:
     # step 1 : obtaining repo from github
       - checkout
+      - run:
+          name: python versioning
+          command: python --version
     # steps 2 : creating virtual env and installing dependancies
       - run:
           name: install dependancies
